@@ -1,0 +1,26 @@
+{
+  "name": "indexden-client",
+  "version": "0.0.1",
+  "description": "Node.js client for http://www.indexden.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sn0wFox/indexden-client.git"
+  },
+  "keywords": [
+    "indexden",
+    "indexden-client",
+    "indexden-node",
+    "indexden-nodejs",
+    "indexden-node-client"
+  ],
+  "author": "http://github.com/Sn0wFox",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Sn0wFox/indexden-client/issues"
+  },
+  "homepage": "https://github.com/Sn0wFox/indexden-client#readme"
+}
