@@ -2,9 +2,10 @@
   "name": "indexden-client",
   "version": "0.0.1",
   "description": "Node.js client for http://www.indexden.com",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No test specified yet\" && exit 0"
   },
   "repository": {
     "type": "git",
@@ -17,10 +18,24 @@
     "indexden-nodejs",
     "indexden-node-client"
   ],
-  "author": "http://github.com/Sn0wFox",
+  "author": {
+    "name": "Ruben 'Sn0wFox' Pericas-Moya",
+    "email": "ruben.pericas@gmail.com",
+    "url": "http://github.com/Sn0wFox"
+  },
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/Sn0wFox/indexden-client/issues"
   },
-  "homepage": "https://github.com/Sn0wFox/indexden-client#readme"
+  "homepage": "https://github.com/Sn0wFox/indexden-client#indexden-client",
+  "devDependencies": {
+    "@types/jasmine": "^2.5.41",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-jasmine": "^2.4.2",
+    "gulp-typescript": "^3.1.4",
+    "gulp-util": "^3.0.8",
+    "jasmine": "^2.5.3",
+    "jasmine-core": "^2.5.2",
+    "typescript": "^2.1.5"
+  }
 }

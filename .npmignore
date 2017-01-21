@@ -1,0 +1,13 @@
+# Source files 
+src
+
+# Config & build files
+tsconfig.json
+gulpfile.js
+.travis.yml
+
+# Test files
+dist/**/*.spec.js
+
+# Logs
+*.log
