@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"No test specified yet\" && exit 0"
+    "build": "gulp build",
+    "test": "gulp test --continue"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
   "homepage": "https://github.com/Sn0wFox/indexden-client#readme",
   "devDependencies": {
     "@types/jasmine": "^2.5.41",
+    "del": "^2.2.2",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-jasmine": "^2.4.2",
     "gulp-typescript": "^3.1.4",
