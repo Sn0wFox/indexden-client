@@ -1,4 +1,29 @@
 [![Build Status](https://travis-ci.org/Sn0wFox/indexden-client.svg?branch=master)](https://travis-ci.org/Sn0wFox/indexden-client)
 
 # indexden-client
-Node.js client for http://www.indexden.com/.
+Node.js promisified client for http://www.indexden.com/.
+Powered by [Bluebird](https://github.com/petkaantonov/bluebird)
+and [Request-Promise](https://github.com/request/request-promise).
+
+This is the very beginning of the client, stay tuned!
+
+## Install it
+`npm install indexden-client`
+
+## Use it
+```js
+let Indexden = require('indexden-client');
+
+// Create client
+let client = new Indexden.Client("http://my-indexden-server.com");
+
+// Get metadata about all registered indexes
+client
+  .getIndexesMetadata()
+  .then(data => console.log(data));
+```
+
+## Supported API endpoints
+
+* `GET /v1/indexes`
+* `GET /v1/indexes/name`
