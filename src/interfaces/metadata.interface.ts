@@ -19,13 +19,13 @@ export interface Metadata {
    * A string with the time when this index was created formatted according to the ISO 8601 format.
    * For example: 2010-01-01T12:00:00
    */
-  creation_time: Date;
+  creation_time: Date | string;
 
   /**
    * A string with the time when this index was modified last time - formatted according to the ISO 8601 format.
    * For example: 2010-01-01T12:00:00
    */
-  update_time: Date;
+  update_time: Date | string;
 
   /**
    * An integer with the size in documents of this index.
