@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/Sn0wFox/indexden-client/issues"
   },
-  "homepage": "https://github.com/Sn0wFox/indexden-client#indexden-client",
+  "homepage": "https://github.com/Sn0wFox/indexden-client#readme",
   "devDependencies": {
     "@types/jasmine": "^2.5.41",
     "gulp": "github:gulpjs/gulp#4.0",
