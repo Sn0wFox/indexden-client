@@ -12,3 +12,6 @@ dist/**/*.spec.js
 
 # Logs
 *.log
+
+# IDE related files
+.idea
