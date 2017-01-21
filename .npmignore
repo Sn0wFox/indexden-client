@@ -2,8 +2,9 @@
 src
 
 # Config & build files
-tsconfig.json
 gulpfile.js
+tsconfig.json
+.gitignore
 .travis.yml
 
 # Test files
