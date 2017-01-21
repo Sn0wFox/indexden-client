@@ -1,7 +1,6 @@
-"use strict"
+"use strict";
 
 const gulp = require('gulp');                     // Local gulp lib
-const gutil = require('gulp-util');               // To add some logs
 const gjasmine = require('gulp-jasmine');         // To build and run tests
 const gtypescript = require('gulp-typescript');   // To make gulp work with TypeScript compiler
 const del = require('del');                       // To erase some file during cleaning tasks
@@ -17,6 +16,13 @@ gulp.task('build', () => {
     .src(['src/**/*.ts', 'node_modules/@types/**/*.ts', '!src/**/*.spec.ts'])
     .pipe(gtypescript(tscConfig.compilerOptions))
     .pipe(gulp.dest('dist'));
+});
+
+/**
+ * Removes all files in the dist/ directory.
+ */
+gulp.task('clean', () => {
+  return del('dist/**/*');
 });
 
 /**
