@@ -21,7 +21,7 @@ export class Client {
    * @param serverUrl the URL to connect.
    */
   public constructor(serverUrl: string) {
-    this.endpoint = url.parse(url.resolve(serverUrl, "/v1"));
+    this.endpoint = url.parse(url.resolve(serverUrl, "/v1/indexes"));
   }
 
   /**
@@ -32,7 +32,7 @@ export class Client {
    * @returns {Promise<Metadata | MetadataMap>}
    */
   public getIndexesMetadata(indexName?: string): Promise<Metadata | MetadataMap> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/indexes" + (indexName ? "/" + indexName : "")));
+    let uri = url.format(url.parse(url.format(this.endpoint) + (indexName ? "/" + indexName : "")));
     return Promise.resolve(Request({
       method: 'GET',
       uri: uri,
@@ -48,7 +48,7 @@ export class Client {
    * @returns {Promise<void>}
    */
   public createOrUpdateIndex(indexName: string, enablePublicSearch: boolean = false): Promise<void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/indexes/" + indexName));
+    let uri = url.format(url.parse(url.format(this.endpoint) + indexName));
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,
@@ -65,7 +65,7 @@ export class Client {
    * @returns {Promise<void>}
    */
   public deleteIndex(indexName: string): Promise<void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/indexes/" + indexName));
+    let uri = url.format(url.parse(url.format(this.endpoint) + indexName));
     return Promise.resolve(Request({
       method: 'DELETE',
       uri: uri
@@ -76,12 +76,12 @@ export class Client {
    * Adds the given documents to the index name.
    * If there are more than one document,
    * this will return an array of IndexResult.
-   * @param indexName The name of the index to which add the document.
+   * @param indexName The name of the index to which add the document(s).
    * @param docs The document or array of documents to index.
    * @returns {Promise<IndexResult[] | void>}
    */
   public indexDocs(indexName: string, docs: Document | Document[]): Promise<IndexResult[] | void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/indexes/" + indexName + "/docs"));
+    let uri = url.format(url.parse(url.format(this.endpoint) + indexName + "/docs"));
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,
@@ -90,8 +90,15 @@ export class Client {
     }));
   }
 
+  /**
+   * Removes a given documents
+   * or bulk of documents from the index name.
+   * @param indexName The name of the index from which remove the document(s).
+   * @param docIds The ID(s) of the document or array of documents to index.
+   * @returns {Bluebird<DeindexResult[] | void>}
+   */
   public removeDocsFromIndex(indexName: string, docIds: DocumentIdentifier | DocumentIdentifier[]): Promise<DeindexResult[] | void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/indexes/" + indexName + "/docs"));
+    let uri = url.format(url.parse(url.format(this.endpoint) + indexName + "/docs"));
     return Promise.resolve(Request({
       method: 'DELETE',
       uri: uri,
