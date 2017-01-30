@@ -12,3 +12,14 @@ describe('GetIndexMetadata', () => {
       });
   });
 });
+
+describe('createOrUpdateIndex', () => {
+  let client = new Client(process.env.INDEXDEN_ENDPOINT);
+  it('should update index', (done: any) => {
+    client
+      .createOrUpdateIndex('test')
+      .then(() => {
+        done();
+      });
+  });
+});

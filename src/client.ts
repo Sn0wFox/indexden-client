@@ -31,12 +31,42 @@ export class Client {
    */
   public getIndexesMetadata(indexName?: string): Promise<Metadata | MetadataMap> {
     let uri = url.format(url.parse(url.format(this.endpoint) + "/indexes" + (indexName ? "/" + indexName : "")));
-    return Request({
+    return Promise.resolve(Request({
       method: 'GET',
       uri: uri,
       json: true
-    }).then((metadata: Metadata | MetadataMap) => {
-      return metadata;
-    });
+    }));
+  }
+
+  /**
+   * Creates or updates an index with the given name.
+   * It cannot contain forward slashes "/".
+   * @param indexName The name of the index to create or update.
+   * @param enablePublicSearch Whether or not the public search must be enabled. False by default.
+   * @returns {Promise<void>}
+   */
+  public createOrUpdateIndex(indexName: string, enablePublicSearch: boolean = false): Promise<void> {
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/indexes/" + indexName));
+    return Promise.resolve(Request({
+      method: 'PUT',
+      uri: uri,
+      json: true,
+      body: {
+        public_search: enablePublicSearch
+      }
+    }));
+  }
+
+  /**
+   * Removes the index name from the account.
+   * @param indexName The name of the index to remove.
+   * @returns {Promise<void>}
+   */
+  public deleteIndex(indexName: string): Promise<void> {
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/indexes/" + indexName));
+    return Promise.resolve(Request({
+      method: 'DELETE',
+      uri: uri
+    }));
   }
 }
