@@ -1,6 +1,9 @@
 language: node_js
 node_js:
-    - "7.2.1"
+- 7.2.1
 script: npm run test
 before_script:
-    - npm install
+- npm install
+env:
+  matrix:
+    secure: DzCWSmpnBVjA2B0hgLiIB/ErlSA6qQ7BhXDKlohni6awhU/UhmqHEKWzVYWz8wuym1/DukoZdqbQ5hfi2K0BedIwsBUn82Z5HOq83U2Dt5Rv02lFS07h3otoaq5zIbRw5s/BG0bqmSwrC1HgNEk+SnhF0rBmm7Pl4vsMOTCEzaNRPAPUm7wRqONG+c1VH5dAgY8Pk2D5UWYsNd9RGua02LI2LPo8TjWk6KY9cba2n7Q9WnquYqMpaRq/XyhJGh5nI2L1tjjwVkg9mHhQU57VuLqMnmXzj0r7uS0yPVz+ULWTlslY8qSK/YUZlPOGSlvogn0UYosoZQ8dHUHnBMAHvTh0cC3h0Z7o1/NPUNtIwq7e2d2bA6jim6Zd1y5IaCsPH6GtKbVFy8ff0747KJoKyZsF2WzQRqQsBROKtaUDg7e3VmLM27SL4GAuC08NCvTV1k8jH6Jm9xdi183cfGvzu9QoFbHQIFgZWSBL/F8lxoDElT/rBYV6EDZmWBh+vSxfi+YQNfF6V7Hmr+OTmpcVHDoTRy2LXHI8JmuORCbNWRbMbnCLiASE20fcKeUOtfKSeiI8uF3blvOjhr+1YbSjhiEalOUxWLEu8jUBndWY+sxeS1ClsJ9X4vht1kEmLONn8kI0yfQ3FPJqHS2C+Zh/yTpPDdJNFQaLvpq5DzHkDrA=
