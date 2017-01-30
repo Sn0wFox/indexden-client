@@ -29,3 +29,5 @@ client
 * `GET /v1/indexes/name`
 * `PUT /v1/indexes/name`
 * `DELETE /v1/indexes/name`
+* `PUT /v1/indexes/name/docs` (list and single document)
+* `DELETE /v1/indexes/name/docs` (list and single document)

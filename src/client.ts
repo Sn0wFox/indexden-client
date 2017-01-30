@@ -3,6 +3,8 @@ import * as Promise from 'bluebird';
 import * as Request from 'request-promise';
 
 import {Metadata, MetadataMap} from './interfaces/metadata.interface';
+import {DocumentIdentifier, Document} from './interfaces/document.interface';
+import {IndexResult, DeindexResult} from './interfaces/index-result.interface';
 
 /**
  * The class representing an Indexden client.
@@ -67,6 +69,34 @@ export class Client {
     return Promise.resolve(Request({
       method: 'DELETE',
       uri: uri
+    }));
+  }
+
+  /**
+   * Adds the given documents to the index name.
+   * If there are more than one document,
+   * this will return an array of IndexResult.
+   * @param indexName The name of the index to which add the document.
+   * @param docs The document or array of documents to index.
+   * @returns {Promise<IndexResult[] | void>}
+   */
+  public indexDocs(indexName: string, docs: Document | Document[]): Promise<IndexResult[] | void> {
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/indexes/" + indexName + "/docs"));
+    return Promise.resolve(Request({
+      method: 'PUT',
+      uri: uri,
+      body: docs,
+      json: true
+    }));
+  }
+
+  public removeDocsFromIndex(indexName: string, docIds: DocumentIdentifier | DocumentIdentifier[]): Promise<DeindexResult[] | void> {
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/indexes/" + indexName + "/docs"));
+    return Promise.resolve(Request({
+      method: 'DELETE',
+      uri: uri,
+      body: docIds,
+      json: true
     }));
   }
 }
