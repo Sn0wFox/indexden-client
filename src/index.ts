@@ -1,4 +1,4 @@
-export {Metadata} from './interfaces/metadata.interface';
+export {Metadata, MetadataMap} from './interfaces/metadata.interface';
 
 import * as Search from './interfaces/search';
 export {Search};

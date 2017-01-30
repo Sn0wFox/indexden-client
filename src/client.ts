@@ -2,7 +2,7 @@ import * as url from 'url';
 import * as Promise from 'bluebird';
 import * as Request from 'request-promise';
 
-import {Metadata} from './';
+import {Metadata, MetadataMap} from './interfaces/metadata.interface';
 
 /**
  * The class representing an Indexden client.
@@ -25,20 +25,18 @@ export class Client {
   /**
    * Retrieves the metadata of every index in this account,
    * or of the index named after indexName.
+   * If indexName is specified, result will be a MetadataMap.
    * @param indexName The specific index to which retrieve metadata. Optional.
-   * @returns {Promise<Metadata | Metadata[]>}
+   * @returns {Promise<Metadata | MetadataMap>}
    */
-  public getIndexesMetadata(indexName?: string): Promise<Metadata | Metadata[]> {
+  public getIndexesMetadata(indexName?: string): Promise<Metadata | MetadataMap> {
     let uri = url.format(url.parse(url.format(this.endpoint) + "/indexes" + (indexName ? "/" + indexName : "")));
     return Request({
       method: 'GET',
-      uri: uri
-    })
-    .then((metadata: string) => {
-      return JSON.parse(metadata);
-    })
-    .catch((err: Error) => {
-      return Promise.reject(err);
+      uri: uri,
+      json: true
+    }).then((metadata: Metadata | MetadataMap) => {
+      return metadata;
     });
   }
 }
