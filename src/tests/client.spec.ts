@@ -2,27 +2,16 @@ import {Client} from '..';
 import {MetadataMap} from '../interfaces/metadata.interface';
 import {IndexResult, DeindexResult} from '../interfaces/index-result.interface';
 
-describe('client', () => {
-  describe('getIndexMetadata', () => {
-    let client = new Client(process.env.INDEXDEN_ENDPOINT);
-    it('should retrieve metadata', (done: any) => {
-      client
-        .getIndexesMetadata()
-        .then((data: MetadataMap) => {
-          expect(data).toBeTruthy();
-          done();
-        });
-    });
-  });
+describe('Client', () => {
+  let client = new Client(process.env.INDEXDEN_ENDPOINT);
 
-  describe('createOrUpdateIndex', () => {
-    let client = new Client(process.env.INDEXDEN_ENDPOINT);
+  describe('.createOrUpdateIndex()', () => {
     let originalTimeout: number = 0;
 
     beforeEach(() => {
       // This call is quite long, so we have to increase default timeout delay
       originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = 12000;
     });
 
     it('should create a test index', (done: any) => {
@@ -38,8 +27,18 @@ describe('client', () => {
     });
   });
 
-  describe('indexDocs', () => {
-    let client = new Client(process.env.INDEXDEN_ENDPOINT);
+  describe('.getIndexMetadata()', () => {
+    it('should retrieve metadata', (done: any) => {
+      client
+        .getIndexesMetadata('test')
+        .then((data: MetadataMap) => {
+          expect(data).toBeTruthy();
+          done();
+        });
+    });
+  });
+
+  describe('.indexDocs()', () => {
     it('should index a single doc', (done: any) => {
       client
         .indexDocs('test', {
@@ -76,8 +75,21 @@ describe('client', () => {
     });
   });
 
-  describe('removeDocsFromIndex', () => {
-    let client = new Client(process.env.INDEXDEN_ENDPOINT);
+  describe('.search()', () => {
+    it('should find something', (done: any) => {
+      client
+        .search('test', {
+          q: 'test',
+
+        })
+        .then((res: any) => {
+          console.log(res);
+          done();
+        });
+    });
+  });
+
+  describe('.removeDocsFromIndex()', () => {
     it('should remove a single doc', (done: any) => {
       client
         .removeDocsFromIndex('test', {
@@ -105,8 +117,7 @@ describe('client', () => {
     });
   });
 
-  describe('deleteIndex', () => {
-    let client = new Client(process.env.INDEXDEN_ENDPOINT);
+  describe('.deleteIndex()', () => {
     it('should delete the given index', (done: any) => {
       client
         .deleteIndex('test')

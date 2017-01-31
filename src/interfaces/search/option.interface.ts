@@ -55,16 +55,16 @@ export interface Option {
   /**
    * Comma-separated list of ranges to filter the values of variable <N>.
    * Each range is expressed as BOTTOM:TOP,
-   * here any of both limits can be replaced by an * symbol to indicate it should be ignored.
+   * where any of both limits can be replaced by an * symbol to indicate it should be ignored.
    */
   filter_docvar?: { [key: string]: string; };
 
   /**
    * Comma-separated list of ranges to filter the values of function <N>.
    * Each range is expressed as BOTTOM:TOP,
-   * where any of both limits can be replaced by an * symbol to indicate it should be ignored
+   * where any of both limits can be replaced by an * symbol to indicate it should be ignored.
    */
-  filter_function?: { [key: string]: number; };
+  filter_function?: { [key: string]: string; };
 
   /**
    * 'true' - global search inside whole index (default false).

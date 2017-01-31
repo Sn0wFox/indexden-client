@@ -2,6 +2,7 @@ import * as url from 'url';
 import * as Promise from 'bluebird';
 import * as Request from 'request-promise';
 
+import * as Search from './interfaces/search';
 import {Metadata, MetadataMap} from './interfaces/metadata.interface';
 import {DocumentIdentifier, Document} from './interfaces/document.interface';
 import {IndexResult, DeindexResult} from './interfaces/index-result.interface';
@@ -33,6 +34,7 @@ export class Client {
    */
   public getIndexesMetadata(indexName?: string): Promise<Metadata | MetadataMap> {
     let uri = url.format(url.parse(url.format(this.endpoint) + (indexName ? "/" + indexName : "")));
+    console.log(uri);
     return Promise.resolve(Request({
       method: 'GET',
       uri: uri,
@@ -48,7 +50,8 @@ export class Client {
    * @returns {Promise<void>}
    */
   public createOrUpdateIndex(indexName: string, enablePublicSearch: boolean = false): Promise<void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + indexName));
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName));
+    console.log(uri);
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,
@@ -65,7 +68,7 @@ export class Client {
    * @returns {Promise<void>}
    */
   public deleteIndex(indexName: string): Promise<void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + indexName));
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName));
     return Promise.resolve(Request({
       method: 'DELETE',
       uri: uri
@@ -81,7 +84,7 @@ export class Client {
    * @returns {Promise<IndexResult[] | void>}
    */
   public indexDocs(indexName: string, docs: Document | Document[]): Promise<IndexResult[] | void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + indexName + "/docs"));
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs"));
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,
@@ -98,12 +101,99 @@ export class Client {
    * @returns {Bluebird<DeindexResult[] | void>}
    */
   public removeDocsFromIndex(indexName: string, docIds: DocumentIdentifier | DocumentIdentifier[]): Promise<DeindexResult[] | void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + indexName + "/docs"));
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs"));
     return Promise.resolve(Request({
       method: 'DELETE',
       uri: uri,
       body: docIds,
       json: true
     }));
+  }
+
+  /**
+   * Performs a search on the index name.
+   * @param indexName The name of the index in which perform the search.
+   * @param options The search options.
+   * @returns {Promise<Search.Result>}
+   */
+  public search(indexName: string, options: Search.Option): Promise<Search.Result> {
+    let uri = this.buildSearchUri(indexName, options);
+    return Promise.resolve(Request({
+      method: 'GET',
+      uri: uri,
+      json: true
+    }));
+  }
+
+  /**
+   * Performs a delete search on the index name.
+   * @param indexName The name of the index in which perform the search.
+   * @param options The search options.
+   * @returns {Promise<void>}
+   */
+  public deleteSearch(indexName: string, options: Search.Option): Promise<void> {
+    let uri = this.buildSearchUri(indexName, options);
+    return Promise.resolve(Request({
+      method: 'DELETE',
+      uri: uri,
+      json: true
+    }));
+  }
+
+  protected buildSearchUri(indexName: string, options: Search.Option): string {
+    let base: string = url.format(this.endpoint) + "/" + indexName + "/search?q=" + options.q;
+    for(let key in options) {
+      if (!options.hasOwnProperty(key)) {
+        continue;
+      }
+      switch(key) {
+        case 'start':
+          base += '&start=' + options[key];
+          break;
+        case 'len':
+          base += '&len=' + options[key];
+          break;
+        case 'function':
+          base += '&function=' + options[key];
+          break;
+        case 'fetch':
+          base += '&fetch=' + options[key];
+          break;
+        case 'fetch_variables':
+          base += '&fetch_variables=' + options[key];
+          break;
+        case 'fetch_categories':
+          base += '&fetch_categories=' + options[key];
+          break;
+        case 'snippet':
+          base += '&snippet=' + options[key];
+          break;
+        case 'match_any_field':
+          base += '&match_any_field=' + options[key];
+          break;
+        case 'filter_function':
+          base += Client.mapToIndexdenString('filter_function', options[key]);
+          break;
+        case 'filter_docvar':
+          base += Client.mapToIndexdenString('filter_docvar', options[key]);
+          break;
+        case 'category_filters':
+          // TODO: I'm not sure about this one
+          base += '&category_filters=' + options[key];
+          break;
+      }
+    }
+    return url.format(url.parse(base));
+  }
+
+  protected static mapToIndexdenString(base: string, map: {[key: string] : any}): string {
+    let opt: string = "";
+    for(let key in map) {
+      if (!map.hasOwnProperty(key)) {
+        continue;
+      }
+      opt += '&' + base + key + '=' + map[key];
+    }
+    return opt;
   }
 }
