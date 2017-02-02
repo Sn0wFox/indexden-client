@@ -22,7 +22,7 @@ export interface Document extends DocumentIdentifier {
    * A map from the var number to float.
    */
   variables?: {
-    [key: number]: string;
+    [key: number]: number;
   };
 
   /**
