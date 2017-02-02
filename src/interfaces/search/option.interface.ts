@@ -43,7 +43,7 @@ export interface Option {
   /**
    * Value of the query variable <N>.
    */
-  "var"?: { [key: string]: string; };
+  "var"?: { [key: number]: string; };
 
   /**
    *A json map from category name to a list of the admitted values for those categories.
@@ -57,14 +57,14 @@ export interface Option {
    * Each range is expressed as BOTTOM:TOP,
    * where any of both limits can be replaced by an * symbol to indicate it should be ignored.
    */
-  filter_docvar?: { [key: string]: string; };
+  filter_docvar?: { [key: number]: string; };
 
   /**
    * Comma-separated list of ranges to filter the values of function <N>.
    * Each range is expressed as BOTTOM:TOP,
    * where any of both limits can be replaced by an * symbol to indicate it should be ignored.
    */
-  filter_function?: { [key: string]: string; };
+  filter_function?: { [key: number]: string; };
 
   /**
    * 'true' - global search inside whole index (default false).
