@@ -139,13 +139,29 @@ export class Client {
   }
 
   /**
-   * Update the variables of a document in index name.
+   * Updates the variables of a document in index name.
    * @param indexName The name of the index.
    * @param options The variables of a specific document to update.
    * @returns {Promise<void>}
    */
   public createOrUpdateVariables(indexName: string, options: Scoring.Variables): Promise<void> {
     let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs/variables"));
+    return Promise.resolve(Request({
+      method: 'PUT',
+      uri: uri,
+      body: options,
+      json: true
+    }));
+  }
+
+  /**
+   * Updates the categories of a document in index name.
+   * @param indexName The name of the index.
+   * @param options The categories of a specific document to update.
+   * @returns {Promise<void>}
+   */
+  public createOrUpdateCategories(indexName: string, options: Document.Categories): Promise<void> {
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs/categories"));
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,

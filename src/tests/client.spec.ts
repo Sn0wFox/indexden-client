@@ -102,7 +102,33 @@ describe('Client', () => {
     });
   });
 
+  describe('.createOrUpdateCategories()', () => {
+    it('should create a category', (done: any) => {
+      client
+        .createOrUpdateCategories('test', {
+          docid: 'mysingledoc',
+          categories: {
+            cat: "some new text in the new category"
+          }
+        })
+        .then(() => {
+          done();
+        });
+    });
 
+    it('should update a category', (done: any) => {
+      client
+        .createOrUpdateCategories('test', {
+          docid: 'mysingledoc',
+          categories: {
+            cat: "some updated text in the category"
+          }
+        })
+        .then(() => {
+          done();
+        });
+    });
+  });
 
   describe('.search()', () => {
     it('should find something', (done: any) => {
