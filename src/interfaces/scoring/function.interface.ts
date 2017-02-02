@@ -6,7 +6,7 @@
  * as well as some special variables such as the document's age
  * and the textual relevance of the match.
  */
-export interface Functions {
+export interface Function {
   /**
    * The formula that defines the function.
    */

@@ -35,3 +35,6 @@ client
 * `DELETE /v1/indexes/name/search`
 * `PUT /v1/indexes/name/docs/variables`
 * `PUT /v1/indexes/name/docs/categories`
+* `GET /v1/indexes/name/functions`
+* `PUT /v1/indexes/name/functions/num`
+* `DELETE /v1/indexes/name/functions/num`

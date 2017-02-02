@@ -1,4 +1,5 @@
 import * as Indexes from '../interfaces/indexes';
+import * as Scoring from '../interfaces/scoring';
 import {Client} from '..';
 
 describe('Client', () => {
@@ -125,6 +126,39 @@ describe('Client', () => {
           }
         })
         .then(() => {
+          done();
+        });
+    });
+  });
+
+  describe('.defineScoringFunction()', () => {
+    it('should define a function', (done: any) => {
+      client
+        .defineScoringFunction('test', 1, {
+          definition: "age"
+        })
+        .then(() => {
+          done();
+        });
+    });
+  });
+
+  describe('.removeScoringFunction()', () => {
+    it('should remove a function', (done: any) => {
+      client
+        .removeScoringFunction('test', 1)
+        .then(() => {
+          done();
+        });
+    });
+  });
+
+  describe('.getAllScoringFunctions()', () => {
+    it('should gather all defined functions', (done: any) => {
+      client
+        .getAllScoringFunctions('test')
+        .then((res: Scoring.FunctionMap) => {
+          expect(res).toBeTruthy();
           done();
         });
     });

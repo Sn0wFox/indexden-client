@@ -170,6 +170,52 @@ export class Client {
     }));
   }
 
+  /**
+   * Retrieves all the functions defined for the index name.
+   * @param indexName The name of the index.
+   * @returns {Promise<Scoring.FunctionMap>}
+   */
+  public getAllScoringFunctions(indexName: string): Promise<Scoring.FunctionMap> {
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/functions"));
+    return Promise.resolve(Request({
+      method: 'GET',
+      uri: uri,
+      json: true
+    }));
+  }
+
+  /**
+   * Defines the given function for the index name.
+   * @param indexName The name of the index.
+   * @param functionId The function's ID to define.
+   * @param f The function formula.
+   * @returns {Promise<void>}
+   */
+  public defineScoringFunction(indexName: string, functionId: number, f: Scoring.Function): Promise<void> {
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/functions/" + functionId));
+    return Promise.resolve(Request({
+      method: 'PUT',
+      uri: uri,
+      body: f,
+      json: true
+    }));
+  }
+
+  /**
+   * Defines the given function for the index name.
+   * @param indexName The name of the index.
+   * @param functionId The function's ID to define.
+   * @returns {Promise<void>}
+   */
+  public removeScoringFunction(indexName: string, functionId: number): Promise<void> {
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/functions/" + functionId));
+    return Promise.resolve(Request({
+      method: 'DELETE',
+      uri: uri,
+      json: true
+    }));
+  }
+
   protected buildSearchUri(indexName: string, options: Search.Option): string {
     let base: string = url.format(this.endpoint) + "/" + indexName + "/search?q=" + options.q;
     for(let key in options) {
