@@ -6,6 +6,7 @@ import * as Search from './interfaces/search';
 import {Metadata, MetadataMap} from './interfaces/metadata.interface';
 import {DocumentIdentifier, Document} from './interfaces/document.interface';
 import {IndexResult, DeindexResult} from './interfaces/index-result.interface';
+import {Scoring} from './interfaces/scoring.interface';
 
 /**
  * The class representing an Indexden client.
@@ -34,7 +35,6 @@ export class Client {
    */
   public getIndexesMetadata(indexName?: string): Promise<Metadata | MetadataMap> {
     let uri = url.format(url.parse(url.format(this.endpoint) + (indexName ? "/" + indexName : "")));
-    console.log(uri);
     return Promise.resolve(Request({
       method: 'GET',
       uri: uri,
@@ -51,7 +51,6 @@ export class Client {
    */
   public createOrUpdateIndex(indexName: string, enablePublicSearch: boolean = false): Promise<void> {
     let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName));
-    console.log(uri);
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,
@@ -136,6 +135,22 @@ export class Client {
     return Promise.resolve(Request({
       method: 'DELETE',
       uri: uri,
+      json: true
+    }));
+  }
+
+  /**
+   * Update the variables of a document in index name.
+   * @param indexName The name of the index.
+   * @param options The variables of a specific document to update.
+   * @returns {Promise<void>}
+   */
+  public createOrUpdateVariables(indexName: string, options: Scoring): Promise<void> {
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs/variables"));
+    return Promise.resolve(Request({
+      method: 'PUT',
+      uri: uri,
+      body: options,
       json: true
     }));
   }

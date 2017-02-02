@@ -75,15 +75,54 @@ describe('Client', () => {
     });
   });
 
+  describe('.createOrUpdateVariables()', () => {
+    it('should create a variable', (done: any) => {
+      client
+        .createOrUpdateVariables('test', {
+          docid: 'mysingledoc',
+          variables: {
+            0: 0
+          }
+        })
+        .then(() => {
+          done();
+        });
+    });
+
+    it('should update a variable', (done: any) => {
+      client
+        .createOrUpdateVariables('test', {
+          docid: 'mysingledoc',
+          variables: {
+            0: 1
+          }
+        })
+        .then(() => {
+          done();
+        });
+    });
+  });
+
+
+
   describe('.search()', () => {
     it('should find something', (done: any) => {
       client
         .search('test', {
-          q: 'test',
-
+          q: 'test'
         })
         .then((res: any) => {
-          console.log(res);
+          done();
+        });
+    });
+
+    it('should fetch variables', (done: any) => {
+      client
+        .search('test', {
+          q: 'bit',
+          fetch_variables: true
+        })
+        .then((res: any) => {
           done();
         });
     });
