@@ -1,5 +1,6 @@
 import * as Indexes from '../interfaces/indexes';
 import * as Scoring from '../interfaces/scoring';
+import * as Search from '../interfaces/search';
 import {Client} from '..';
 
 describe('Client', () => {
@@ -172,6 +173,19 @@ describe('Client', () => {
           query: 'promoted'
         })
         .then(() => {
+          done();
+        });
+    });
+  });
+
+  describe('.autocomplete()', () => {
+    it('should autocomplete a query', (done: any) => {
+      client
+        .autocomplete('test', {
+          query: 'bi'
+        })
+        .then((res: Search.Suggestions) => {
+          expect(res).toBeTruthy();
           done();
         });
     });

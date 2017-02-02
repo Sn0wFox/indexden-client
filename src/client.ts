@@ -79,7 +79,7 @@ export class Client {
    * this will return an array of IndexResult.
    * @param indexName The name of the index to which add the document(s).
    * @param docs The document or array of documents to index.
-   * @returns {Promise<IndexResult[] | void>}
+   * @returns {Promise<IndexedResult[] | void>}
    */
   public indexDocs(indexName: string, docs: Document.Doc | Document.Doc[]): Promise<Indexes.IndexedResult[] | void> {
     let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs"));
@@ -96,7 +96,7 @@ export class Client {
    * or bulk of documents from the index name.
    * @param indexName The name of the index from which remove the document(s).
    * @param docIds The ID(s) of the document or array of documents to index.
-   * @returns {Bluebird<DeindexResult[] | void>}
+   * @returns {Promise<DeindexedResult[] | void>}
    */
   public removeDocsFromIndex(indexName: string, docIds: Document.Identifier | Document.Identifier[]): Promise<Indexes.DeindexedResult[] | void> {
     let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs"));
@@ -196,6 +196,24 @@ export class Client {
       method: 'PUT',
       uri: uri,
       body: options,
+      json: true
+    }));
+  }
+
+  /**
+   * Performs a search on the index name,
+   * and retrieves search suggestions.
+   * JSONP is NOT supported.
+   * @param indexName The name of the index of which perform the search.
+   * @param options The query to autocomplete.
+   * @returns {Promise<Search.Suggestions>}
+   */
+  public autocomplete(indexName: string, options: Search.Autocomplete): Promise<Search.Suggestions> {
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/autocomplete?query=" +
+      options.query + (options.field ? "&field=" + options.field : "")));
+    return Promise.resolve(Request({
+      method: 'GET',
+      uri: uri,
       json: true
     }));
   }
