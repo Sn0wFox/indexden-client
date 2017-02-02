@@ -164,6 +164,19 @@ describe('Client', () => {
     });
   });
 
+  describe('.promoteResult()', () => {
+    it('should promote a result', (done: any) => {
+      client
+        .promoteResult('test', {
+          docid: 'mysingledoc',
+          query: 'promoted'
+        })
+        .then(() => {
+          done();
+        });
+    });
+  });
+
   describe('.search()', () => {
     it('should find something', (done: any) => {
       client

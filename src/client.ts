@@ -185,6 +185,22 @@ export class Client {
   }
 
   /**
+   * Retrieves all the functions defined for the index name.
+   * @param indexName The name of the index.
+   * @param options The document to promote for a specific query.
+   * @returns {Promise<void>}
+   */
+  public promoteResult(indexName: string, options: Document.Promoted): Promise<void> {
+    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/promote"));
+    return Promise.resolve(Request({
+      method: 'PUT',
+      uri: uri,
+      body: options,
+      json: true
+    }));
+  }
+
+  /**
    * Defines the given function for the index name.
    * @param indexName The name of the index.
    * @param functionId The function's ID to define.

@@ -38,3 +38,4 @@ client
 * `GET /v1/indexes/name/functions`
 * `PUT /v1/indexes/name/functions/num`
 * `DELETE /v1/indexes/name/functions/num`
+* `PUT /v1/indexes/name/promote`
