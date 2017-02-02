@@ -3,7 +3,7 @@
  * These variables can be used in scoring functions for sorting search results.
  * Variables can be updated rapidly; these updates don't count towards your indexing limits.
  */
-export interface Scoring {
+export interface Variables {
   /**
    * The document identifier.
    */

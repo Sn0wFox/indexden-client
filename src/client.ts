@@ -3,10 +3,10 @@ import * as Promise from 'bluebird';
 import * as Request from 'request-promise';
 
 import * as Search from './interfaces/search';
+import * as Scoring from './interfaces/scoring';
 import {Metadata, MetadataMap} from './interfaces/metadata.interface';
 import {DocumentIdentifier, Document} from './interfaces/document.interface';
 import {IndexResult, DeindexResult} from './interfaces/index-result.interface';
-import {Scoring} from './interfaces/scoring.interface';
 
 /**
  * The class representing an Indexden client.
@@ -145,7 +145,7 @@ export class Client {
    * @param options The variables of a specific document to update.
    * @returns {Promise<void>}
    */
-  public createOrUpdateVariables(indexName: string, options: Scoring): Promise<void> {
+  public createOrUpdateVariables(indexName: string, options: Scoring.Variables): Promise<void> {
     let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs/variables"));
     return Promise.resolve(Request({
       method: 'PUT',
