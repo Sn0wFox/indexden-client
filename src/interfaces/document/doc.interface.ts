@@ -1,15 +1,9 @@
-export interface DocumentIdentifier {
-  /**
-   * Your document identifier.
-   * A non-empty String no longer than 1024 bytes.
-   */
-  docid: string;
-}
+import {Identifier} from './identifier.interface';
 
 /**
  * Each indexed document is an object defined by this interface.
  */
-export interface Document extends DocumentIdentifier {
+export interface Doc extends Identifier {
   /**
    * A map from field name to field value.
    * The sum of the length of each field value MUST not be greater than 100kbytes.

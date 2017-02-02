@@ -4,9 +4,8 @@ import * as Request from 'request-promise';
 
 import * as Search from './interfaces/search';
 import * as Scoring from './interfaces/scoring';
-import {Metadata, MetadataMap} from './interfaces/metadata.interface';
-import {DocumentIdentifier, Document} from './interfaces/document.interface';
-import {IndexResult, DeindexResult} from './interfaces/index-result.interface';
+import * as Document from './interfaces/document';
+import * as Indexes from './interfaces/indexes';
 
 /**
  * The class representing an Indexden client.
@@ -33,7 +32,7 @@ export class Client {
    * @param indexName The specific index to which retrieve metadata. Optional.
    * @returns {Promise<Metadata | MetadataMap>}
    */
-  public getIndexesMetadata(indexName?: string): Promise<Metadata | MetadataMap> {
+  public getIndexesMetadata(indexName?: string): Promise<Indexes.Metadata | Indexes.MetadataMap> {
     let uri = url.format(url.parse(url.format(this.endpoint) + (indexName ? "/" + indexName : "")));
     return Promise.resolve(Request({
       method: 'GET',
@@ -82,7 +81,7 @@ export class Client {
    * @param docs The document or array of documents to index.
    * @returns {Promise<IndexResult[] | void>}
    */
-  public indexDocs(indexName: string, docs: Document | Document[]): Promise<IndexResult[] | void> {
+  public indexDocs(indexName: string, docs: Document.Doc | Document.Doc[]): Promise<Indexes.IndexedResult[] | void> {
     let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs"));
     return Promise.resolve(Request({
       method: 'PUT',
@@ -99,7 +98,7 @@ export class Client {
    * @param docIds The ID(s) of the document or array of documents to index.
    * @returns {Bluebird<DeindexResult[] | void>}
    */
-  public removeDocsFromIndex(indexName: string, docIds: DocumentIdentifier | DocumentIdentifier[]): Promise<DeindexResult[] | void> {
+  public removeDocsFromIndex(indexName: string, docIds: Document.Identifier | Document.Identifier[]): Promise<Indexes.DeindexedResult[] | void> {
     let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs"));
     return Promise.resolve(Request({
       method: 'DELETE',

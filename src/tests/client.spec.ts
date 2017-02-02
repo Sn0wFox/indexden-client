@@ -1,6 +1,5 @@
+import * as Indexes from '../interfaces/indexes';
 import {Client} from '..';
-import {MetadataMap} from '../interfaces/metadata.interface';
-import {IndexResult, DeindexResult} from '../interfaces/index-result.interface';
 
 describe('Client', () => {
   let client = new Client(process.env.INDEXDEN_ENDPOINT);
@@ -31,7 +30,7 @@ describe('Client', () => {
     it('should retrieve metadata', (done: any) => {
       client
         .getIndexesMetadata('test')
-        .then((data: MetadataMap) => {
+        .then((data: Indexes.MetadataMap) => {
           expect(data).toBeTruthy();
           done();
         });
@@ -66,7 +65,7 @@ describe('Client', () => {
             "text": "a bit of text for the second test"
           }
           }])
-        .then((results: IndexResult[]) => {
+        .then((results: Indexes.IndexedResult[]) => {
           for(let res of results) {
             expect(res.added).toBe(true);
           }
@@ -147,7 +146,7 @@ describe('Client', () => {
         {
           docid: 'anothertestdoc'
         }])
-        .then((results: DeindexResult[]) => {
+        .then((results: Indexes.DeindexedResult[]) => {
           for(let res of results) {
             expect(res.deleted).toBe(true);
           }

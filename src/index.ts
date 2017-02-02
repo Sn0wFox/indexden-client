@@ -1,6 +1,8 @@
-export {Metadata, MetadataMap} from './interfaces/metadata.interface';
-export {DocumentIdentifier, Document} from './interfaces/document.interface';
-export {IndexResult, DeindexResult} from './interfaces/index-result.interface';
+import * as Indexes from './interfaces/indexes';
+export {Indexes};
+
+import * as Document from './interfaces/document';
+export {Document};
 
 import * as Search from './interfaces/search';
 export {Search};

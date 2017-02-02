@@ -39,11 +39,3 @@ export interface Metadata {
   public_search: boolean;
 }
 
-/**
- * When not asking for a particular index,
- * results will be a map of metadata,
- * with keys being indexes' names.
- */
-export type MetadataMap = {
-  [key: string]: Metadata;
-};
