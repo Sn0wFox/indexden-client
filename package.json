@@ -1,6 +1,6 @@
 {
   "name": "indexden-client",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "Node.js client for http://www.indexden.com",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
