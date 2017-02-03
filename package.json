@@ -30,9 +30,7 @@
   },
   "homepage": "https://github.com/Sn0wFox/indexden-client#readme",
   "devDependencies": {
-    "@types/bluebird": "^3.0.37",
     "@types/jasmine": "^2.5.41",
-    "@types/node": "^7.0.0",
     "@types/request": "0.0.39",
     "@types/request-promise": "^4.1.33",
     "del": "^2.2.2",
@@ -46,6 +44,8 @@
     "typescript": "^2.1.5"
   },
   "dependencies": {
+    "@types/bluebird": "^3.0.37",
+    "@types/node": "^7.0.4",
     "bluebird": "^3.4.7",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
