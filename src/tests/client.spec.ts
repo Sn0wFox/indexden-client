@@ -245,7 +245,7 @@ describe('Client', () => {
   describe('.deleteIndex()', () => {
     it('should delete the given index', (done: any) => {
       client
-        .deleteIndex('test')
+        .removeIndex('test')
         .then(() => {
           done();
         });

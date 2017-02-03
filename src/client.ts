@@ -17,7 +17,7 @@ export class Client {
   protected endpoint: url.Url;
 
   /**
-   * Construct a new Client,
+   * Constructs a new Client,
    * connected to the given URL.
    * @param serverUrl the URL to connect.
    */
@@ -65,7 +65,7 @@ export class Client {
    * @param indexName The name of the index to remove.
    * @returns {Promise<void>}
    */
-  public deleteIndex(indexName: string): Promise<void> {
+  public removeIndex(indexName: string): Promise<void> {
     let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName));
     return Promise.resolve(Request({
       method: 'DELETE',
