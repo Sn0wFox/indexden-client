@@ -33,7 +33,7 @@ export class Client {
    * @returns {Promise<Metadata | MetadataMap>}
    */
   public getIndexesMetadata(indexName?: string): Promise<Indexes.Metadata | Indexes.MetadataMap> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + (indexName ? "/" + indexName : "")));
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + (indexName ? "/" + indexName : "")));
     return Promise.resolve(Request({
       method: 'GET',
       uri: uri,
@@ -49,7 +49,7 @@ export class Client {
    * @returns {Promise<void>}
    */
   public createOrUpdateIndex(indexName: string, enablePublicSearch: boolean = false): Promise<void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName));
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + "/" + indexName));
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,
@@ -66,7 +66,7 @@ export class Client {
    * @returns {Promise<void>}
    */
   public removeIndex(indexName: string): Promise<void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName));
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + "/" + indexName));
     return Promise.resolve(Request({
       method: 'DELETE',
       uri: uri
@@ -82,7 +82,7 @@ export class Client {
    * @returns {Promise<IndexedResult[] | void>}
    */
   public indexDocs(indexName: string, docs: Document.Doc | Document.Doc[]): Promise<Indexes.IndexedResult[] | void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs"));
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + "/" + indexName + "/docs"));
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,
@@ -99,7 +99,7 @@ export class Client {
    * @returns {Promise<DeindexedResult[] | void>}
    */
   public removeDocsFromIndex(indexName: string, docIds: Document.Identifier | Document.Identifier[]): Promise<Indexes.DeindexedResult[] | void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs"));
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + "/" + indexName + "/docs"));
     return Promise.resolve(Request({
       method: 'DELETE',
       uri: uri,
@@ -145,7 +145,7 @@ export class Client {
    * @returns {Promise<void>}
    */
   public createOrUpdateVariables(indexName: string, options: Scoring.Variables): Promise<void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs/variables"));
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + "/" + indexName + "/docs/variables"));
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,
@@ -161,7 +161,7 @@ export class Client {
    * @returns {Promise<void>}
    */
   public createOrUpdateCategories(indexName: string, options: Document.Categories): Promise<void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/docs/categories"));
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + "/" + indexName + "/docs/categories"));
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,
@@ -176,7 +176,7 @@ export class Client {
    * @returns {Promise<Scoring.FunctionMap>}
    */
   public getAllScoringFunctions(indexName: string): Promise<Scoring.FunctionMap> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/functions"));
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + "/" + indexName + "/functions"));
     return Promise.resolve(Request({
       method: 'GET',
       uri: uri,
@@ -191,7 +191,7 @@ export class Client {
    * @returns {Promise<void>}
    */
   public promoteResult(indexName: string, options: Document.Promoted): Promise<void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/promote"));
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + "/" + indexName + "/promote"));
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,
@@ -209,7 +209,7 @@ export class Client {
    * @returns {Promise<Search.Suggestions>}
    */
   public autocomplete(indexName: string, options: Search.Autocomplete): Promise<Search.Suggestions> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/autocomplete?query=" +
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + "/" + indexName + "/autocomplete?query=" +
       options.query + (options.field ? "&field=" + options.field : "")));
     return Promise.resolve(Request({
       method: 'GET',
@@ -226,7 +226,7 @@ export class Client {
    * @returns {Promise<void>}
    */
   public defineScoringFunction(indexName: string, functionId: number, f: Scoring.Function): Promise<void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/functions/" + functionId));
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + "/" + indexName + "/functions/" + functionId));
     return Promise.resolve(Request({
       method: 'PUT',
       uri: uri,
@@ -242,7 +242,7 @@ export class Client {
    * @returns {Promise<void>}
    */
   public removeScoringFunction(indexName: string, functionId: number): Promise<void> {
-    let uri = url.format(url.parse(url.format(this.endpoint) + "/" + indexName + "/functions/" + functionId));
+    let uri = url.parse(encodeURI(url.format(this.endpoint) + "/" + indexName + "/functions/" + functionId));
     return Promise.resolve(Request({
       method: 'DELETE',
       uri: uri,
@@ -250,7 +250,7 @@ export class Client {
     }));
   }
 
-  protected buildSearchUri(indexName: string, options: Search.Option): string {
+  protected buildSearchUri(indexName: string, options: Search.Option): url.Url {
     let base: string = url.format(this.endpoint) + "/" + indexName + "/search?q=" + options.q;
     for(let key in options) {
       if (!options.hasOwnProperty(key)) {
@@ -293,7 +293,7 @@ export class Client {
           break;
       }
     }
-    return url.format(url.parse(base));
+    return url.parse(encodeURI(base));
   }
 
   protected static mapToIndexdenString(base: string, map: {[key: string] : any}): string {
