@@ -48,5 +48,11 @@ export interface Match {
   /**
    * "category_<NAME>": category value for the NAME document category / facet.
    */
-  category?: {[key: string]: any};
+  categories?: {[key: string]: any};
+
+  /**
+   * To access attributes as a map,
+   * for all other fields you may have.
+   */
+  [key: string]: any;
 }
