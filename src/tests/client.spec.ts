@@ -12,12 +12,13 @@ describe('Client', () => {
     beforeEach(() => {
       // This call is quite long, so we have to increase default timeout delay
       originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = 12000;
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = 25000;
     });
 
     it('should create a test index', (done: any) => {
       client
         .createOrUpdateIndex('test')
+        .delay(5000)
         .then(() => {
           done();
         });
@@ -45,7 +46,10 @@ describe('Client', () => {
         .indexDocs('test', {
           docid: 'mysingledoc',
           fields: {
-            "text": "a bit of text"
+            "text": "a bit of text - single"
+          },
+          categories: {
+            "type": "a certain type"
           }
         })
         .then(() => {
@@ -195,9 +199,28 @@ describe('Client', () => {
     it('should find something', (done: any) => {
       client
         .search('test', {
-          q: 'test'
+          q: 'single'
         })
         .then((res: any) => {
+          expect(res).toBeDefined();
+          expect(res.results).toBeDefined();
+          expect(res.results[0]).toBeDefined();
+          done();
+        });
+    });
+
+    it('should fetch categories', (done: any) => {
+      client
+        .search('test', {
+          q: 'single',
+          fetch_categories: true
+        })
+        .then((res: any) => {
+          expect(res).toBeDefined();
+          expect(res.results).toBeDefined();
+          expect(res.results[0]).toBeDefined();
+          expect(res.results[0].categories).toBeDefined();
+          expect(res.results[0].categories['type']).toBe('a certain type');
           done();
         });
     });
@@ -205,10 +228,15 @@ describe('Client', () => {
     it('should fetch variables', (done: any) => {
       client
         .search('test', {
-          q: 'bit',
+          q: 'single',
           fetch_variables: true
         })
         .then((res: any) => {
+          expect(res).toBeDefined();
+          expect(res.results).toBeDefined();
+          expect(res.results[0]).toBeDefined();
+          expect(res.results[0].variables).toBeDefined();
+          expect(res.results[0].variables['0']).toBe('1');
           done();
         });
     });
