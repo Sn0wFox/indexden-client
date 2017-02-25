@@ -120,7 +120,31 @@ export class Client {
       method: 'GET',
       uri: uri,
       json: true
-    }));
+    }))
+    .then((res: Search.Result) => {
+      for(let i: number = 0; i < res.results.length; i++) {
+        res.results[i].categories = {};
+        res.results[i].variables = {};
+        for(let key in res.results[i]) {
+          if (!res.results[i].hasOwnProperty(key)) {
+            continue;
+          }
+          if (!res.results[i][key]) {
+            delete res.results[i][key];
+            continue;
+          }
+          if(key.match(/^category_/)) {
+            res.results[i].categories[key.substr(9)] = res.results[i][key];
+          } else if(key.match(/^variable_/)) {
+            res.results[i].variables[key.substr(9)] = res.results[i][key];
+          } else {
+            continue;
+          }
+          delete res.results[i][key];
+        }
+      }
+      return res;
+    });
   }
 
   /**
